@@ -58,4 +58,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return new Employee();
     }
+
+    @Override
+    public Employee findByFirstName(String firstName) {
+        return new ObjectMapper()
+                .convertValue(
+                        repository.findByFirstName(firstName),
+                        Employee.class);
+    }
 }
