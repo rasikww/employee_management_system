@@ -8,6 +8,7 @@ import org.edu.demo.repository.EmployeeRepository;
 import org.edu.demo.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,7 +22,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeEntity> getAll() {
-        return repository.findAll();
+    public List<Employee> getAll() {
+        List<Employee> employeeList = new ArrayList<>();
+        List<EmployeeEntity> allEntityList = repository.findAll();
+        allEntityList.forEach(entity -> {
+            Employee employee = new ObjectMapper().convertValue(entity, Employee.class);
+            employeeList.add(employee);
+        });
+        return employeeList;
+    }
+
+    @Override
+    public void deleteEmployeeById(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        }
     }
 }
