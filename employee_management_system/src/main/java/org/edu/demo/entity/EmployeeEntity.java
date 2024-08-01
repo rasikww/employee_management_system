@@ -12,7 +12,10 @@ import lombok.NoArgsConstructor;
 @Table(name = "employee")
 public class EmployeeEntity {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "employee_id_generator")
+    @SequenceGenerator(name = "employee_id_generator",
+    initialValue = 103,
+    allocationSize = 1)
     private Long id;
     private String firstName;
     private String lastName;
